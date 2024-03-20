@@ -2,51 +2,22 @@ import Bg from './objects/bg.js'
 import Player from './objects/player.js'
 import Enemy from './objects/enemy.js'
 
+const container = new PIXI.Container()
+let state = 0
+
 const bg = new Bg()
 const player = new Player()
+
+container.addChild(bg.container)
+container.addChild(player.sprite)
 
 let enemiesPool = []
 
 for (let i = 0; i < 6; i++) {
-	enemiesPool.push(new Enemy())
-}
+	let enemy = new Enemy()
+	enemiesPool.push(enemy)
 
-const game = {
-	state: 0,
-	container: new PIXI.Container(),
-
-	start () {
-		if (this.state) {
-			return
-		}
-
-		this.state = 1
-
-		bg.init()
-		player.init()
-
-		this.container.addChild(bg.container)
-		this.container.addChild(player.sprite)
-
-		for (let enemy of enemiesPool) {
-			enemy.init()
-			this.container.addChild(enemy.sprite)
-		}
-	},
-
-	tick () {
-		handleInput()
-		bg.move()
-
-		for (let enemy of enemiesPool) {
-			enemy.move()
-		}
-	},
-
-	end () {
-		this.state = 0
-		// TODO: вы проиграли
-	},
+	container.addChild(enemy.sprite)
 }
 
 // управление
@@ -67,4 +38,32 @@ function handleInput () {
 	}
 }
 
-export default game
+export { container }
+
+export function start () {
+	if (state) {
+		return
+	}
+
+	state = 1
+
+	bg.init()
+	player.init()
+
+	for (let enemy of enemiesPool) {
+		enemy.init()
+	}
+}
+
+export function tick () {
+	handleInput()
+	bg.move()
+
+	for (let enemy of enemiesPool) {
+		enemy.move()
+	}
+}
+
+export function end () {
+	state = 0
+}

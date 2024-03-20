@@ -1,4 +1,4 @@
-import game from './src/game.js'
+import { start, tick, container } from './src/game.js'
 
 const canvas = document.querySelector('canvas')
 
@@ -19,7 +19,7 @@ function checkSize () {
 		return
 	}
 
-	game.start()
+	start()
 }
 
 window.app = new PIXI.Application({
@@ -28,10 +28,10 @@ window.app = new PIXI.Application({
 	height: 1080,
 })
 
-window.app.stage.addChild(game.container)
+window.app.stage.addChild(container)
 
 app.ticker.add((delta) => {
-	game.tick()
+	tick()
 })
 
 window.rand = (min, max) => {
