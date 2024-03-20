@@ -1,0 +1,48 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	overflow: all;
+
+	background: black;
+	color: white;
+	font-size: 4vh;
+}
+
+#rotate {
+	display: none;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+#rotate img {
+	width: 60vw;
+}
+
+#app {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+canvas.w {
+	width: 100%;
+}
+
+canvas.h {
+	height: 100%;
+}
+
+@media (orientation: portrait) {
+	#rotate {
+		display: flex;
+	}
+	#app {
+		display: none;
+	}
+}
