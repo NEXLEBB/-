@@ -34,6 +34,10 @@ app.ticker.add((delta) => {
 	game.tick()
 })
 
+window.rand = (min, max) => {
+	return (Math.floor(Math.random() * (max - min + 1) + min))
+}
+
 window.pressedKey = []
 document.addEventListener('keydown', (e) => {
 	if (pressedKey.indexOf(e.code) !== -1) {

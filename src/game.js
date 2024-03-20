@@ -1,5 +1,15 @@
-import bg from './objects/bg.js'
-import player from './objects/player.js'
+import Bg from './objects/bg.js'
+import Player from './objects/player.js'
+import Enemy from './objects/enemy.js'
+
+const bg = new Bg()
+const player = new Player()
+
+let enemiesPool = []
+
+for (let i = 0; i < 6; i++) {
+	enemiesPool.push(new Enemy())
+}
 
 const game = {
 	state: 0,
@@ -17,12 +27,20 @@ const game = {
 
 		this.container.addChild(bg.container)
 		this.container.addChild(player.sprite)
+
+		for (let enemy of enemiesPool) {
+			enemy.init()
+			this.container.addChild(enemy.sprite)
+		}
 	},
 
 	tick () {
 		handleInput()
 		bg.move()
-		// TODO: движение врагов
+
+		for (let enemy of enemiesPool) {
+			enemy.move()
+		}
 	},
 
 	end () {
@@ -39,7 +57,6 @@ function handleInput () {
 		|| pressedKey.indexOf('TouchUp') !== -1
 	) {
 		player.move(-1)
-		console.log('player.move(-1)')
 	}
 	if (
 		pressedKey.indexOf('KeyD') !== -1
@@ -47,7 +64,6 @@ function handleInput () {
 		|| pressedKey.indexOf('TouchDown') !== -1
 	) {
 		player.move(1)
-		console.log('player.move(1)')
 	}
 }
 

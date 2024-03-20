@@ -1,25 +1,36 @@
 import resources from '../resources.js'
 
-const bg = {
-	container: new PIXI.Container(),
-	sprite_1: PIXI.Sprite.from(resources.bg_1),
-	sprite_2: PIXI.Sprite.from(resources.bg_2),
-	sprite_3: PIXI.Sprite.from(resources.bg_3),
+export default class Bg {
+	constructor () {
+		this.container = new PIXI.Container()
 
-	flipped: false,
+		this.sprites = [
+			new PIXI.Sprite(),
+			new PIXI.Sprite(),
+		]
 
-	speed: 1,
+		this.ti = -1 // textureIndex
+		this.si = false // spriteIndex
+		
+		this.textures = [
+			resources.bg_1,
+			resources.bg_2,
+			resources.bg_3,
+			resources.bg_4,
+			resources.bg_5,
+			resources.bg_6,
+		]
+
+		this.speed = 2
+
+		this.container.scale.y = 1.2
+
+		this.container.addChild(this.sprites[0])
+		this.container.addChild(this.sprites[1])
+	}
 
 	init () {
-		this.sprite_1.y = -108
-		this.sprite_2.y = -108
-		this.sprite_1.scale.y = 1.2
-		this.sprite_2.scale.y = 1.2
-
-		this.sprite_2.x = this.sprite_1.width
-
-		this.container.addChild(this.sprite_1)
-		this.container.addChild(this.sprite_2)
+		this.swipeSlide()
 
 		// затемняем фон слегка
 		const graphics = new PIXI.Graphics()
@@ -27,29 +38,33 @@ const bg = {
 		graphics.drawRect(0, 0, window.app.screen.width, window.app.screen.height)
 		graphics.endFill()
 		this.container.addChild(graphics)
-	},
+	}
+
+	swipeSlide () {
+		this.ti++
+		this.si = !this.si
+
+		this.sprites[Number(this.si)].texture = this.textures[this.ti]
+		this.sprites[Number(this.si)].x = this.sprites[Number(!this.si)].width
+
+		if (this.ti + 1 >= this.textures.length) {
+			this.ti = -1
+		}
+	}
 
 	move () {
 		let time = (new Date().getTime()) / 1000
 
-		this.sprite_1.y = Math.cos(time) * 5
-		this.sprite_2.y = this.sprite_1.y
+		this.container.y = Math.cos(time) * 10 - 108
 
-		if (!this.flipped) {
-			if (this.sprite_1.x < -this.sprite_1.width) {
-				this.sprite_1.x = this.sprite_2.width - this.speed
-				this.flipped = true
-			}
-		} else {
-			if (this.sprite_2.x < -this.sprite_2.width) {
-				this.sprite_2.x = this.sprite_1.width - this.speed
-				this.flipped = false
-			}
+		if (
+			this.sprites[0].x <= - this.sprites[0].width
+			|| this.sprites[1].x < -this.sprites[1].width
+		) {
+			this.swipeSlide()
 		}
 
-		this.sprite_1.x -= this.speed
-		this.sprite_2.x -= this.speed
-	},
+		this.sprites[0].x -= this.speed
+		this.sprites[1].x -= this.speed
+	}
 }
-
-export default bg
