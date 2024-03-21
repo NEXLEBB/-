@@ -2,7 +2,7 @@ import resources from '../resources.js'
 
 export default class Bullet {
 	constructor () {
-		this.sprite = PIXI.Sprite.from(resources.bullet)
+		this.sprite = PIXI.Sprite.from(resources.player_bullet)
 
 		this.sprite.anchor.set(0.5, 0.5)
 
