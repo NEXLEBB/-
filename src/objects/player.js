@@ -14,7 +14,7 @@ export default class Player {
 		this.sprite = PIXI.Sprite.from(resources.player)
 		
 		this.hp = 3
-		this.speed = 5
+		this.speed = 6
 
 		this.gunId = 0
 	}
