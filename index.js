@@ -52,29 +52,49 @@ document.addEventListener('keyup', (e) => {
 	}
 	pressedKey.splice(index, 1)
 })
+
+let oldTouch = null
+
 canvas.addEventListener('touchstart', (e) => {
 	e.preventDefault()
 
-	const code = e.touches[0].clientY < window.screen.height / 2
-		? 'TouchUp'
-		: 'TouchDown'
-
-	if (pressedKey.indexOf(code) !== -1) {
-		return
+	for (let touch of e.touches) {
+		if (touch.clientX > window.screen.width / 2) {
+			if (pressedKey.indexOf('TouchShot') !== -1) {
+				continue
+			}
+			pressedKey.push('TouchShot')
+			continue
+		}
+		oldTouch = touch
 	}
-
-	pressedKey.push(code)
 })
 canvas.addEventListener('touchmove', (e) => {
 	e.preventDefault()
 
-	const code = e.touches[0].clientY < window.screen.height / 2
+	let newTouch = null
+
+	for (let touch of e.touches) {
+		if (touch.clientX > window.screen.width / 2) {
+			continue
+		}
+
+		newTouch = touch
+	}
+
+	if (!newTouch) {
+		return
+	}
+
+	let dir = newTouch.clientY < oldTouch.clientY
+
+	const code = dir 
 		? 'TouchUp'
 		: 'TouchDown'
 
-	const oldCode = e.touches[0].clientY > window.screen.height / 2
-		? 'TouchUp'
-		: 'TouchDown'
+	const oldCode = dir
+		? 'TouchDown'
+		: 'TouchUp'
 
 	const index = pressedKey.indexOf(oldCode)
 	if (index !== -1) {
@@ -90,14 +110,33 @@ canvas.addEventListener('touchmove', (e) => {
 canvas.addEventListener('touchend', (e) => {
 	e.preventDefault()
 
-	const indexTU = pressedKey.indexOf('TouchUp')
-	if (indexTU !== 1) {
-		pressedKey.splice(indexTU, 1)
+	let saveShot = false
+	let saveUpDown = false
+
+	for (let touch of e.touches) {
+		if (touch.clientX > window.screen.width / 2) {
+			saveShot = true
+			continue
+		}
+		saveUpDown = true
 	}
 
-	const indexTD = pressedKey.indexOf('TouchDown')
-	if (indexTD !== 1) {
-		pressedKey.splice(indexTD, 1)
+	if (!saveShot) {
+		const indexTS = pressedKey.indexOf('TouchShot')
+		if (indexTS !== -1) {
+			pressedKey.splice(indexTS, 1)
+		}
+	}
+	if (!saveUpDown) {
+		const indexTU = pressedKey.indexOf('TouchUp')
+		if (indexTU !== -1) {
+			pressedKey.splice(indexTU, 1)
+		}
+
+		const indexTD = pressedKey.indexOf('TouchDown')
+		if (indexTD !== -1) {
+			pressedKey.splice(indexTD, 1)
+		}
 	}
 })
 
