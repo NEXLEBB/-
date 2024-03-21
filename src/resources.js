@@ -7,7 +7,7 @@ PIXI.Assets.add({ alias: 'bg_6', src: 'assets/bgs/6.png' })
 
 PIXI.Assets.add({ alias: 'player', src: 'assets/sps/player.png' })
 
-PIXI.Assets.add({ alias: 'player_bullet', src: 'assets/sps/bullet.png' })
+PIXI.Assets.add({ alias: 'player_bullet', src: 'assets/sps/player_bullet.png' })
 
 PIXI.Assets.add({ alias: 'enemy_1', src: 'assets/sps/enemy_1.png' })
 PIXI.Assets.add({ alias: 'enemy_2', src: 'assets/sps/enemy_2.png' })
