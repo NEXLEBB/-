@@ -29,7 +29,11 @@ export default class Enemy {
 
 		if (this.sprite.x < -(this.sprite.width / 2)) {
 			// TODO: минус жизнь по идее
-			this.init()
+			this.destroy()
 		}
+	}
+
+	destroy () {
+		this.init()
 	}
 }

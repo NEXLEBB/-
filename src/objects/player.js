@@ -1,11 +1,22 @@
 import resources from '../resources.js'
 
+const gunsCoords = [
+	[ 130, 110 ],
+	[ 240, 126 ],
+	[ 127, 149 ],
+	[ 237, 163 ],
+	[ 127, 192 ],
+	[ 247, 200 ],
+]
+
 export default class Player {
 	constructor () {
 		this.sprite = PIXI.Sprite.from(resources.player)
 		
 		this.hp = 3
 		this.speed = 5
+
+		this.gunId = 0
 	}
 
 	init () {
@@ -30,7 +41,16 @@ export default class Player {
 		this.sprite.y += delta
 	}
 
-	shot () {
-		// TODO: make shot
+	getGunCoords () {
+		this.gunId++
+
+		if (this.gunId > gunsCoords.length) {
+			this.gunId = 1
+		}
+
+		return ({
+			x: gunsCoords[this.gunId - 1][0] + this.sprite.x,
+			y: gunsCoords[this.gunId - 1][1] + this.sprite.y - (this.sprite.height / 2),
+		})
 	}
 }
