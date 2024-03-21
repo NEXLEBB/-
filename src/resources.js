@@ -7,7 +7,7 @@ PIXI.Assets.add({ alias: 'bg_6', src: 'assets/bgs/6.png' })
 
 PIXI.Assets.add({ alias: 'player', src: 'assets/sps/player.png' })
 
-PIXI.Assets.add({ alias: 'bullet', src: 'assets/sps/bullet.png' })
+PIXI.Assets.add({ alias: 'player_bullet', src: 'assets/sps/bullet.png' })
 
 PIXI.Assets.add({ alias: 'enemy_1', src: 'assets/sps/enemy_1.png' })
 PIXI.Assets.add({ alias: 'enemy_2', src: 'assets/sps/enemy_2.png' })
@@ -15,7 +15,7 @@ PIXI.Assets.add({ alias: 'enemy_2', src: 'assets/sps/enemy_2.png' })
 const resources = await PIXI.Assets.load([
 	'bg_1', 'bg_2', 'bg_3', 'bg_4', 'bg_5', 'bg_6',
 	'player',
-	'bullet',
+	'player_bullet',
 	'enemy_1', 'enemy_2'
 ])
 
