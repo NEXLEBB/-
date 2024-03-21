@@ -55,8 +55,15 @@ export function start () {
 	}
 }
 
+// todo: ПАУЗА
+
 export function tick () {
 	handleInput()
+
+	if (!state) {
+		return
+	}
+	
 	bg.move()
 
 	for (let enemy of enemiesPool) {
