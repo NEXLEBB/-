@@ -9,7 +9,7 @@ PIXI.Assets.add({ alias: 'enemy_1', src: 'assets/sps/enemy_1.png' })
 PIXI.Assets.add({ alias: 'enemy_2', src: 'assets/sps/enemy_2.png' })
 
 PIXI.Assets.add({ alias: 'hp', src: 'assets/gui/healf.png' })
-PIXI.Assets.add({ alias: 'player_bullet_snd', src: 'resources/sounds/sound.ogg' })
+PIXI.Assets.add({ alias: 'snd_player_bullet', src: 'resources/sounds/sound.ogg' })
 const resources = await PIXI.Assets.load([
 	'bg_1', 'bg_2',
 	'player',
