@@ -2,26 +2,6 @@ import { start, tick, container } from './src/game.js'
 
 const canvas = document.querySelector('canvas')
 
-function checkSize () {
-	let wr = window.innerWidth / window.innerHeight
-	let ar = app.screen.width / app.screen.height
-
-	let hw = wr > ar
-	app.view.classList.remove(hw ? 'w' : 'h')
-	
-	if (!app.view.classList.contains(hw ? 'h' : 'w')) {
-		app.view.classList.add(hw ? 'h' : 'w')
-	}
-
-	let isAlbum = wr > 1
-
-	if (!isAlbum) {
-		return
-	}
-
-	start()
-}
-
 window.app = new PIXI.Application({
 	view: canvas,
 	width: 1920,
@@ -38,6 +18,7 @@ window.rand = (min, max) => {
 	return (Math.floor(Math.random() * (max - min + 1) + min))
 }
 
+// регистрируем клавиши, тачи для управления
 window.pressedKey = []
 document.addEventListener('keydown', (e) => {
 	if (pressedKey.indexOf(e.code) !== -1) {
@@ -140,5 +121,25 @@ canvas.addEventListener('touchend', (e) => {
 	}
 })
 
+// поворот экрана
+function checkSize () {
+	let wr = window.innerWidth / window.innerHeight
+	let ar = app.screen.width / app.screen.height
+
+	let hw = wr > ar
+	app.view.classList.remove(hw ? 'w' : 'h')
+	
+	if (!app.view.classList.contains(hw ? 'h' : 'w')) {
+		app.view.classList.add(hw ? 'h' : 'w')
+	}
+
+	let isAlbum = wr > 1
+
+	if (!isAlbum) {
+		return
+	}
+
+	start()
+}
 window.addEventListener('resize', checkSize)
 checkSize()

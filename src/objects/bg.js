@@ -15,13 +15,13 @@ export default class Bg {
 		this.textures = [
 			resources.bg_1,
 			resources.bg_2,
-			resources.bg_3,
-			resources.bg_4,
-			resources.bg_5,
-			resources.bg_6,
+			// resources.bg_3,
+			// resources.bg_4,
+			// resources.bg_5,
+			// resources.bg_6,
 		]
 
-		this.speed = 2
+		this.speed = 1
 
 		this.container.scale.y = 1.2
 
@@ -45,7 +45,8 @@ export default class Bg {
 		this.si = !this.si
 
 		this.sprites[Number(this.si)].texture = this.textures[this.ti]
-		this.sprites[Number(this.si)].x = this.sprites[Number(!this.si)].width
+		this.sprites[Number(this.si)].x = this.sprites[Number(!this.si)].width - 2
+		this.sprites[Number(!this.si)].x += 2
 
 		if (this.ti + 1 >= this.textures.length) {
 			this.ti = -1

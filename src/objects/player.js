@@ -12,8 +12,7 @@ const gunsCoords = [
 export default class Player {
 	constructor () {
 		this.sprite = PIXI.Sprite.from(resources.player)
-		
-		this.hp = 3
+
 		this.speed = 6
 
 		this.gunId = 0
@@ -23,8 +22,9 @@ export default class Player {
 		this.sprite.width = 256
 		this.sprite.height = 256
 		this.sprite.anchor.set(0, 0.5)
-		this.sprite.x = 0
+		this.sprite.x = 24
 		this.sprite.y = 456
+		this.sprite.zIndex = this.sprite.y
 	}
 
 	move (dir) {
@@ -39,6 +39,7 @@ export default class Player {
 		}
 
 		this.sprite.y += delta
+		this.sprite.zIndex = this.sprite.y
 	}
 
 	getGunCoords () {

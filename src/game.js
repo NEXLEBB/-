@@ -1,4 +1,5 @@
 import Bg from './objects/bg.js'
+import Gui from './objects/gui.js'
 import Player from './objects/player.js'
 import Enemy from './objects/enemy.js'
 import Bullet from './objects/bullet.js'
@@ -6,19 +7,55 @@ import Bullet from './objects/bullet.js'
 // Константы
 const enemiesCount = 8 // кол-во врагов в пуле (макс)
 const bulltesCount = 48 // кол-во патрон в пуле (макс)
+const maxHp = 7 // максимальное здоровье
 // Переменные
-let shotDelay = 0.5 // таймаут между выстрелами (в секундах)
+let shotDelay = 0.75 // таймаут между выстрелами (в секундах)
 let bulletsPerShot = 1 // кол-во одновременно выпускаемых партон
+
+const gameplay = {
+	_hp: 0,
+	_score: 0,
+
+	get hp() {
+		return (this._hp)
+	},
+	set hp(v) {
+		if (v > maxHp) {
+			return
+		}
+		this._hp = v
+		if (v < 0) {
+			end()
+			return
+		}
+		gui.changeHp(this._hp)
+	},
+
+	get score() {
+		return (this._score)
+	},
+	set score(v) {
+		this._score = v
+		gui.changeScore(this._score)
+	},
+}
 
 // Инициализация и тд
 const container = new PIXI.Container()
+const room = new PIXI.Container()
+room.sortableChildren = true
+
 let state = 0
 
 const bg = new Bg()
 const player = new Player()
+const gui = new Gui({ maxHp })
 
 container.addChild(bg.container)
-container.addChild(player.sprite)
+container.addChild(room)
+container.addChild(gui.container)
+
+room.addChild(player.sprite)
 
 let enemiesPool = []
 let bulletsPool = []
@@ -26,8 +63,11 @@ let bulletsPool = []
 for (let i = 0; i < enemiesCount; i++) {
 	let enemy = new Enemy()
 	enemiesPool.push(enemy)
+	enemy.onBrokeThrough = () => {
+		gameplay.hp -= 1
+	}
 
-	container.addChild(enemy.sprite)
+	room.addChild(enemy.sprite)
 }
 
 for (let i = 0; i < bulltesCount; i++) {
@@ -84,13 +124,10 @@ function handleInput () {
 		bulletsPerShot = 6
 	}
 	if (pressedKey.indexOf('Digit0') !== -1) {
-		shotDelay = 0.5
-	}
-	if (pressedKey.indexOf('Digit9') !== -1) {
-		shotDelay = 0.25
+		gameplay.score += 10
 	}
 	if (pressedKey.indexOf('Digit8') !== -1) {
-		shotDelay = 0.1
+		gameplay.score -= 1
 	}
 }
 
@@ -136,24 +173,9 @@ function checkCollision (a, b) {
     )
 }
 
+// логика
+
 export { container }
-
-export function start () {
-	if (state) {
-		return
-	}
-
-	state = 1
-
-	bg.init()
-	player.init()
-
-	for (let enemy of enemiesPool) {
-		enemy.init()
-	}
-}
-
-// TODO: ПАУЗА
 
 export function tick () {
 	handleInput()
@@ -185,12 +207,35 @@ export function tick () {
 			if (checkCollision(enemy.sprite, bullet.sprite)) {
 				enemy.destroy()
 				bullet.destroy()
+
+				gameplay.score += 1
 				// TODO: генерируем лут
 			}
 		}
 	}
 }
 
+export function start () {
+	if (state) {
+		return
+	}
+
+	state = 1
+
+	gameplay.hp = 3
+	gameplay.score = 0
+
+	bg.init()
+	player.init()
+	gui.init()
+
+	for (let enemy of enemiesPool) {
+		enemy.init()
+	}
+}
+
+// TODO: ПАУЗА
+
 export function end () {
-	state = 0
+	// state = 0
 }
