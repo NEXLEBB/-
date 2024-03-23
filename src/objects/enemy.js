@@ -15,7 +15,7 @@ export default class Enemy {
 		const spriteId = rand(1, 2)
 		const sizeCoff = rand(8, 12) / 10
 
-		this.sprite.texture = resources['enemy_' + spriteId]
+		this.sprite.texture = resources['spr_enemy_' + spriteId]
 
 		this.sprite.width = this.sprite.texture.width / 3 * sizeCoff
 		this.sprite.height = this.sprite.texture.height / 3 * sizeCoff

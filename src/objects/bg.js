@@ -15,10 +15,6 @@ export default class Bg {
 		this.textures = [
 			resources.bg_1,
 			resources.bg_2,
-			// resources.bg_3,
-			// resources.bg_4,
-			// resources.bg_5,
-			// resources.bg_6,
 		]
 
 		this.speed = 1

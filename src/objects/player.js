@@ -11,7 +11,7 @@ const gunsCoords = [
 
 export default class Player {
 	constructor () {
-		this.sprite = PIXI.Sprite.from(resources.player)
+		this.sprite = PIXI.Sprite.from(resources.spr_player)
 
 		this.speed = 6
 

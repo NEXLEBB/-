@@ -4,6 +4,8 @@ import Player from './objects/player.js'
 import Enemy from './objects/enemy.js'
 import Bullet from './objects/bullet.js'
 
+import resources from './resources.js'
+
 // Константы
 const enemiesCount = 8 // кол-во врагов в пуле (макс)
 const bulltesCount = 48 // кол-во патрон в пуле (макс)
@@ -65,6 +67,8 @@ for (let i = 0; i < enemiesCount; i++) {
 	enemiesPool.push(enemy)
 	enemy.onBrokeThrough = () => {
 		gameplay.hp -= 1
+
+		resources.snd_damage.play()
 	}
 
 	room.addChild(enemy.sprite)
@@ -126,8 +130,8 @@ function handleInput () {
 	if (pressedKey.indexOf('Digit0') !== -1) {
 		gameplay.score += 10
 	}
-	if (pressedKey.indexOf('Digit8') !== -1) {
-		gameplay.score -= 1
+	if (pressedKey.indexOf('Digit9') !== -1) {
+		gameplay.hp += 1
 	}
 }
 
@@ -146,6 +150,10 @@ function shot () {
 		let {x, y} = player.getGunCoords()
 
 		bullet.init(x, y)
+
+		setTimeout(() => {
+			resources.snd_player_bullet.play()
+		}, i * 125)
 
 		if (i < bulletsPerShot - 1) {
 			i++
@@ -237,5 +245,6 @@ export function start () {
 // TODO: ПАУЗА
 
 export function end () {
+	resources.snd_dead.play()
 	// state = 0
 }

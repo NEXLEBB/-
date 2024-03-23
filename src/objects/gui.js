@@ -7,7 +7,7 @@ export default class Gui {
 		this.hpSprites = []
 
 		for (let i = 0; i < maxHp; i++) {
-			let sprite = PIXI.Sprite.from(resources.hp)
+			let sprite = PIXI.Sprite.from(resources.spr_hp)
 			sprite.y = 8
 			sprite.x = i * sprite.width
 			sprite.visible = false
