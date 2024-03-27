@@ -12,8 +12,8 @@ const assets = [
 	{ alias: 'spr_hp', src: 'assets/gui/healf.png' },
 
 	// звуки
-	{ alias: 'snd_player_bullet', src: 'assets/sounds/sound.ogg' },
-	{ alias: 'snd_damage', src: 'assets/sounds/sound.ogg' },
+	{ alias: 'snd_player_bullet', src: 'assets/sounds/piy.ogg' },
+	{ alias: 'snd_damage', src: 'assets/sounds/vzz.ogg' },
 	{ alias: 'snd_heal', src: 'assets/sounds/sound.ogg' },
 	{ alias: 'snd_dead', src: 'assets/sounds/sound.ogg' },
 	{ alias: 'snd_enemy_destroy', src: 'assets/sounds/sound.ogg' },
