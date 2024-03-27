@@ -17,6 +17,7 @@ const assets = [
 	{ alias: 'snd_heal', src: 'assets/sounds/sound.ogg' },
 	{ alias: 'snd_dead', src: 'assets/sounds/sound.ogg' },
 	{ alias: 'snd_enemy_destroy', src: 'assets/sounds/sound.ogg' },
+	{ alias: 'snd_OST', src: 'assets/sounds/OST.ogg' },
 ]
 
 let names = []
