@@ -90,14 +90,14 @@ function handleInput () {
 		|| pressedKey.indexOf('ArrowUp') !== -1
 		|| pressedKey.indexOf('TouchUp') !== -1
 	) {
-		player.move(-1)
+		state && player.move(-1)
 	}
 	if (
 		pressedKey.indexOf('KeyD') !== -1
 		|| pressedKey.indexOf('ArrowDown') !== -1
 		|| pressedKey.indexOf('TouchDown') !== -1
 	) {
-		player.move(1)
+		state && player.move(1)
 	}
 
 	if (
@@ -105,7 +105,7 @@ function handleInput () {
 		|| pressedKey.indexOf('Enter') !== -1
 		|| pressedKey.indexOf('TouchShot') !== -1
 	) {
-		shot()
+		state && shot()
 	}
 
 	// читы
@@ -216,6 +216,8 @@ export function tick () {
 				enemy.destroy()
 				bullet.destroy()
 
+				resources.snd_enemy_destroy.play()
+
 				gameplay.score += 1
 				// TODO: генерируем лут
 			}
@@ -223,12 +225,23 @@ export function tick () {
 	}
 }
 
-export function start () {
+function finit () {
+	gameplay.hp = 3
+	gameplay.score = 0
+
+	bg.init()
+	player.init()
+	gui.init()
+
+	for (let enemy of enemiesPool) {
+		enemy.init()
+	}
+}
+
+export function init () {
 	if (state) {
 		return
 	}
-
-	state = 1
 
 	gameplay.hp = 3
 	gameplay.score = 0
@@ -242,9 +255,38 @@ export function start () {
 	}
 }
 
+export function start () {
+	if (state) {
+		return
+	}
+
+	state = 1
+
+	// TODO: состояние игры короче да
+ 
+	finit()
+}
+
+export function mreboot () {
+	state = 1
+
+	gameplay.hp = 3
+
+	for (let enemy of enemiesPool) {
+		enemy.init()
+	}
+}
+
 // TODO: ПАУЗА
 
 export function end () {
 	resources.snd_dead.play()
-	// state = 0
+
+	for (let bullet of bulletsPool) {
+		bullet.destroy()
+	}
+
+	state = 0
+	document.querySelector('#gameover')
+		.style.display = ''
 }

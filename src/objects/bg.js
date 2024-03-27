@@ -23,17 +23,28 @@ export default class Bg {
 
 		this.container.addChild(this.sprites[0])
 		this.container.addChild(this.sprites[1])
+
+		this.blur = new PIXI.Graphics()
+		this.blur.beginFill(0x000000, 0.4)
+		this.blur.drawRect(0, 0, 1, 1)
+		this.blur.endFill()
+ 
+		this.container.addChild(this.blur)
+
+		this.state = false
 	}
 
 	init () {
-		this.swipeSlide()
+		this.blur.width = window.app.screen.width
+		this.blur.height = window.app.screen.height
 
-		// затемняем фон слегка
-		const graphics = new PIXI.Graphics()
-		graphics.beginFill(0x000000, 0.4)
-		graphics.drawRect(0, 0, window.app.screen.width, window.app.screen.height)
-		graphics.endFill()
-		this.container.addChild(graphics)
+		if (this.state) {
+			return
+		}
+
+		this.state = true
+
+		this.swipeSlide()
 	}
 
 	swipeSlide () {

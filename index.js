@@ -1,4 +1,4 @@
-import { start, tick, container } from './src/game.js'
+import { init, start, tick, mreboot, container } from './src/game.js'
 
 const canvas = document.querySelector('canvas')
 
@@ -139,7 +139,29 @@ function checkSize () {
 		return
 	}
 
-	start()
+	init()
 }
 window.addEventListener('resize', checkSize)
 checkSize()
+
+document.querySelector('#play')
+	.addEventListener('click', () => {
+		document.querySelector('#menu')
+			.style.display = 'none'
+		start()
+	})
+
+document.querySelector('#continue')
+	.addEventListener('click', () => {
+		document.querySelector('#gameover')
+			.style.display = 'none'
+		mreboot()
+	})
+
+document.querySelector('#exit')
+	.addEventListener('click', () => {
+		document.querySelector('#menu')
+			.style.display = ''
+		document.querySelector('#gameover')
+			.style.display = 'none'
+	})
