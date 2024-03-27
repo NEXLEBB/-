@@ -259,7 +259,7 @@ export function start () {
 	if (state) {
 		return
 	}
-resources.snd_OST.play({ loop: true })
+	resources.snd_OST.play({ loop: true, value: 0.4 })
 	state = 1
 
 	// TODO: состояние игры короче да
