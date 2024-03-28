@@ -153,6 +153,7 @@ document.querySelector('#play')
 
 document.querySelector('#continue')
 	.addEventListener('click', () => {
+		// TODO: показываем рекламу
 		document.querySelector('#gameover')
 			.style.display = 'none'
 		mreboot()

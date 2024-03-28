@@ -52,6 +52,13 @@ button.danger {
 	text-align: center;
 }
 
+.screen img {
+	max-width: 512px;
+	width: 32vw;
+	height: auto;
+	max-height: 512px;
+}
+
 #rotate img {
 	width: 60vw;
 }
@@ -76,6 +83,9 @@ canvas.h {
 		display: flex;
 	}
 	#app {
+		display: none;
+	}
+	.screen {
 		display: none;
 	}
 }

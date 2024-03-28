@@ -23,7 +23,7 @@ const gameplay = {
 		return (this._hp)
 	},
 	set hp(v) {
-		if (hp < this._hp) {
+		if (v < this._hp) {
 			if (takingDamageTimeout) {
 				return
 			}
@@ -38,7 +38,6 @@ const gameplay = {
 		this._hp = v
 		if (v <= 0) {
 			end()
-			return
 		}
 		gui.changeHp(this._hp)
 	},
@@ -197,11 +196,11 @@ function checkCollision (a, b) {
 export { container }
 
 export function tick () {
-	handleInput()
-
 	if (!state) {
 		return
 	}
+
+	handleInput()
 	
 	bg.move()
 
@@ -270,7 +269,13 @@ export function start () {
 	if (state) {
 		return
 	}
-	resources.snd_OST.play({ loop: true, value: 0.4 })
+	if (window.ost) {
+		if (window.ost.paused) {
+			window.ost.paused = false
+		}
+	} else {
+		window.ost = resources.snd_OST.play({ loop: true, value: 0.4 })
+	}
 	state = 1
 
 	// TODO: состояние игры короче да
@@ -286,12 +291,18 @@ export function mreboot () {
 	for (let enemy of enemiesPool) {
 		enemy.init()
 	}
+
+	if (window.ost.paused) {
+		window.ost.paused = false
+	}
 }
 
 // TODO: ПАУЗА
 
 export function end () {
 	resources.snd_dead.play()
+
+	window.ost.paused = true
 
 	for (let bullet of bulletsPool) {
 		bullet.destroy()
