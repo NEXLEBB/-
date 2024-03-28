@@ -26,7 +26,7 @@ const gameplay = {
 			return
 		}
 		this._hp = v
-		if (v < 0) {
+		if (v <= 0) {
 			end()
 			return
 		}
