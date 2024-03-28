@@ -13,6 +13,7 @@ const maxHp = 7 // максимальное здоровье
 // Переменные
 let shotDelay = 0.75 // таймаут между выстрелами (в секундах)
 let bulletsPerShot = 1 // кол-во одновременно выпускаемых партон
+let takingDamageDelay = 0.5 // таймаут неуязвимости после получения урона
 
 const gameplay = {
 	_hp: 0,
@@ -22,6 +23,15 @@ const gameplay = {
 		return (this._hp)
 	},
 	set hp(v) {
+		if (hp < this._hp) {
+			if (takingDamageTimeout) {
+				return
+			}
+			takingDamageTimeout = setTimeout(() => {
+				clearTimeout(takingDamageTimeout)
+				takingDamageTimeout = null
+			}, takingDamageDelay * 1000)
+		}
 		if (v > maxHp) {
 			return
 		}
@@ -82,6 +92,7 @@ for (let i = 0; i < bulltesCount; i++) {
 }
 
 let shotDelayTimeout = null
+let takingDamageTimeout = null
 
 // управление
 function handleInput () {
